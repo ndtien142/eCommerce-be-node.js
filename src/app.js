@@ -11,6 +11,7 @@ app.use(helmet);
 app.use(compression());
 
 // init db
+require("./dbs/init.mongodb.level0");
 
 // router
 app.get("/", (req, res, next) => {
