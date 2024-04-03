@@ -11,7 +11,14 @@ app.use(helmet);
 app.use(compression());
 
 // init db
-require("./dbs/init.mongodb.level0");
+require("./dbs/init.mongodb.js");
+const {
+  countConnections,
+  checkOverloadServer,
+} = require("./helpers/check.connect.js");
+
+countConnections();
+checkOverloadServer();
 
 // router
 app.get("/", (req, res, next) => {
