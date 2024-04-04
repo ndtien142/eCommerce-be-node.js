@@ -6,32 +6,32 @@ const mongoose = require("mongoose");
 const connectString = `mongodb://127.0.0.1:27017/shopDEV`;
 
 class Database {
-  constructor() {
-    this.connect;
-  }
-
-  // connect
-  connect(type = "mongodb") {
-    if (1 == 1) {
-      mongoose.set("debug", true);
-      mongoose.set("debug", { color: true });
+    constructor() {
+        this.connect;
     }
 
-    mongoose
-      .connect(connectString)
-      .then((connection) => {
-        console.log("Connected to MongoDB");
-      })
-      .catch((error) => console.log(error));
-  }
+    // connect
+    connect(type = "mongodb") {
+        if (1 == 1) {
+            mongoose.set("debug", true);
+            mongoose.set("debug", { color: true });
+        }
 
-  static getInstance() {
-    if (!Database.instance) {
-      Database.instance = new Database();
-    } else {
-      return Database.instance;
+        mongoose
+            .connect(connectString)
+            .then((connection) => {
+                console.log("Connected to MongoDB");
+            })
+            .catch((error) => console.log(error));
     }
-  }
+
+    static getInstance() {
+        if (!Database.instance) {
+            Database.instance = new Database();
+        } else {
+            return Database.instance;
+        }
+    }
 }
 
 const instanceMongodb = Database.instance;

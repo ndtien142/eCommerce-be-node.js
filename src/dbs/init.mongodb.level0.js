@@ -1,20 +1,23 @@
 "use strict";
 
 const mongoose = require("mongoose");
+const {
+    db: { host, name, port },
+} = require("../config/config.mongodb");
 
-const connectString = `mongodb://127.0.0.1:27017/shopDEV`;
+const connectString = `mongodb://${host}:${port}/${name}`;
 
 mongoose
-  .connect(connectString)
-  .then((connection) => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((error) => console.log(error));
+    .connect(connectString)
+    .then((connection) => {
+        console.log("Connected to MongoDB");
+    })
+    .catch((error) => console.log(error));
 
 // dev
 if (1 == 1) {
-  mongoose.set("debug", true);
-  mongoose.set("debug", { color: true });
+    mongoose.set("debug", true);
+    mongoose.set("debug", { color: true });
 }
 
 module.exports = mongoose;
