@@ -2,8 +2,13 @@
 // Apply singleton design pattern
 
 const mongoose = require("mongoose");
+const {
+    db: { host, name, port },
+} = require("../config/config.mongodb");
 
-const connectString = `mongodb://127.0.0.1:27017/shopDEV`;
+const connectString = `mongodb://${host}:${port}/${name}`;
+
+console.log("Connection String ", connectString);
 
 class Database {
     constructor() {
