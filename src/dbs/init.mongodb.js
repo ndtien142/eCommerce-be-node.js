@@ -1,6 +1,6 @@
 "use strict";
-// Apply singleton design pattern
 
+// Apply singleton design pattern
 const mongoose = require("mongoose");
 const {
     db: { host, name, port },
@@ -12,7 +12,7 @@ console.log("Connection String ", connectString);
 
 class Database {
     constructor() {
-        this.connect;
+        this.connect();
     }
 
     // connect
@@ -33,12 +33,12 @@ class Database {
     static getInstance() {
         if (!Database.instance) {
             Database.instance = new Database();
-        } else {
-            return Database.instance;
         }
+
+        return Database.instance;
     }
 }
 
-const instanceMongodb = Database.instance;
+const instanceMongodb = Database.getInstance();
 
 module.exports = instanceMongodb;
