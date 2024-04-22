@@ -3,10 +3,11 @@
 #### Sign Up
 POST {{url_dev}}/shop/signup HTTP/1.1
 Content-Type: application/json
+x-api-key: f66e6be7e1c642efdd3188ccefa453330ad67ead6fbf883a7e9c6da0e95383a460cb3153b314691947f0da53a5241d147897859808385131d09a2e81b4bb7254
 
 {
     "name": "Shop NDTien",
-    "email": "ndtien142@gmail.com",
+    "email": "ndtien142002@gmail.com",
     "password": "abc1234"
 }
 
