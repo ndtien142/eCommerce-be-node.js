@@ -6,7 +6,8 @@ const crypto = require("crypto");
 const KeyTokenService = require("./keytoken.service");
 const { createTokenPair } = require("../auth/authUtils");
 const { getInfoData } = require("../utils");
-const { BadRequestError } = require("../core/error.response");
+const { BadRequestError, AuthFailureError } = require("../core/error.response");
+const { findByEmail } = require("./shop.service");
 
 const RoleShop = {
     SHOP: "SHOP",
@@ -16,6 +17,65 @@ const RoleShop = {
 };
 
 class AccessService {
+    /*
+        1 - Check email in database
+        2 - match password
+        3 - create access token and refresh token and save
+        4 - generate tokens
+        5 - get data return login
+    */
+    static login = async ({ email, password, refreshToken = null }) => {
+        // 1
+        const foundAccount = await findByEmail({ email });
+        if (!foundAccount) throw new BadRequestError("Email not registered");
+
+        // 2
+        const matchPassword = await bcrypt.compare(
+            password,
+            foundAccount.password
+        );
+        if (!matchPassword) throw new AuthFailureError("Authentication Error");
+
+        // 3
+        const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
+            modulusLength: 4096,
+            publicKeyEncoding: {
+                // public key cryptographic standard
+                type: "pkcs1",
+                format: "pem",
+            },
+            privateKeyEncoding: {
+                // public key cryptographic standard
+                type: "pkcs1",
+                format: "pem",
+            },
+        });
+
+        // 4
+        const tokens = await createTokenPair(
+            { userId: foundAccount._id, email },
+            publicKey,
+            privateKey
+        );
+        await KeyTokenService.createKeyToken({
+            userId: foundAccount._id,
+            refreshToken: tokens.refreshToken,
+            privateKey,
+            publicKey,
+        });
+
+        return {
+            code: 200,
+            metadata: {
+                user: getInfoData({
+                    fields: ["_id", "name", "email"],
+                    object: foundAccount,
+                }),
+                tokens,
+            },
+        };
+    };
+
     static signUp = async ({ name, email, password }) => {
         // step 1: check email exist
         // use lean will return a pure object javascript
@@ -83,7 +143,7 @@ class AccessService {
             return {
                 code: 201,
                 metadata: {
-                    shop: getInfoData({
+                    user: getInfoData({
                         fields: ["_id", "name", "email"],
                         object: newShop,
                     }),

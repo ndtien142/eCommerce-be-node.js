@@ -29,7 +29,9 @@ const createTokenPair = async (payload, publicKey, privateKey) => {
             accessToken,
             refreshToken,
         };
-    } catch (err) {}
+    } catch (err) {
+        console.log("Create token failed: ", err);
+    }
 };
 
 module.exports = {
