@@ -41,15 +41,52 @@ class KeyTokenService {
             return err;
         }
     };
+
     static findByUserId = async (userId) => {
         return await keyTokenModel
             .findOne({ user: new Types.ObjectId(userId) })
             .lean();
     };
+
     static removeKeyById = async (id) => {
         const result = await keyTokenModel.deleteOne({
             _id: new Types.ObjectId(id),
         });
+        return result;
+    };
+
+    static findByRefreshTokenUsed = async (refreshToken) => {
+        return await keyTokenModel
+            .findOne({ refreshTokensUsed: refreshToken })
+            .lean();
+    };
+
+    static findByRefreshToken = async (refreshToken) => {
+        return await keyTokenModel.findOne({ refreshToken }).lean();
+    };
+
+    static deleteKeyById = async (id) => {
+        return await keyTokenModel.findOneAndDelete({
+            user: new Types.ObjectId(id),
+        });
+    };
+
+    static updateTokenByRefreshToken = async (
+        newRefreshToken,
+        refreshToken
+    ) => {
+        const result = await keyTokenModel.findOneAndUpdate(
+            { refreshToken: refreshToken },
+            {
+                $set: {
+                    refreshToken: newRefreshToken,
+                },
+                $push: {
+                    refreshTokensUsed: refreshToken,
+                },
+            },
+            { new: true }
+        );
         return result;
     };
 }
