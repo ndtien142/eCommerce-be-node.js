@@ -117,7 +117,7 @@ const authenticationV2 = asyncHandler(async (req, res, next) => {
         }
     }
 
-    const accessToken = req.headers[HEADER.REFRESH_TOKEN];
+    const accessToken = req.headers[HEADER.AUTHORIZATION];
     if (!accessToken) throw new AuthFailureError("Invalid Request");
 
     try {
