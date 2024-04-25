@@ -6,6 +6,10 @@ const COLLECTION_NAME = "Products";
 // Declare the Schema of the Mongo model
 const productSchema = new Schema(
     {
+        _id: {
+            type: String,
+            default: () => nanoid(),
+        },
         product_name: { type: String, required: true },
         product_thumb: { type: String, required: true },
         product_description: String,
@@ -32,6 +36,7 @@ const clothingSchema = new Schema(
         brand: { type: String, required: true },
         size: String,
         material: String,
+        product_shop: { type: Schema.Types.ObjectId, ref: "Shop" },
     },
     {
         collection: "Clothes",
@@ -46,6 +51,7 @@ const electronicSchema = new Schema(
         manufacturer: { type: String, required: true },
         model: String,
         color: String,
+        product_shop: { type: Schema.Types.ObjectId, ref: "Shop" },
     },
     {
         collection: "Electronic",
