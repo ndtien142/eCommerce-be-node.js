@@ -10,8 +10,16 @@ const router = express.Router();
 router.use(authenticationV2);
 ///////////////////////
 router.post("", asyncHandler(productController.createProduct));
+router.put(
+    "/published/:id",
+    asyncHandler(productController.handlePublishProductForShop)
+);
 
 // ======= QUERY ========
 router.get("/drafts/all", asyncHandler(productController.getAllDraftsForShop));
+router.get(
+    "/published/all",
+    asyncHandler(productController.getAllPublishedForShop)
+);
 
 module.exports = router;
