@@ -60,15 +60,31 @@ class ProductController {
     };
 
     /**
-     * @desc Handle publish product for shop
+     * @desc Handle publish product By shop
      * @param {String} product_shop
      * @param {String} product_id
      * @return {JSON}
      */
-    handlePublishProductForShop = async (req, res, next) => {
+    handlePublishProductByShop = async (req, res, next) => {
         new SuccessResponse({
             message: "Handle publish product success!",
             metadata: await ProductServiceV2.publishProductByShop({
+                product_id: req.params.id,
+                product_shop: req.user.userId,
+            }),
+        }).send(res);
+    };
+
+    /**
+     * @desc Handle un publish product By shop
+     * @param {String} product_shop
+     * @param {String} product_id
+     * @return {JSON}
+     */
+    handleUnPublishProductByShop = async (req, res, next) => {
+        new SuccessResponse({
+            message: "Handle publish product success!",
+            metadata: await ProductServiceV2.unPublishProductByShop({
                 product_id: req.params.id,
                 product_shop: req.user.userId,
             }),

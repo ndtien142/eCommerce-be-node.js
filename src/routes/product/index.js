@@ -12,7 +12,11 @@ router.use(authenticationV2);
 router.post("", asyncHandler(productController.createProduct));
 router.put(
     "/published/:id",
-    asyncHandler(productController.handlePublishProductForShop)
+    asyncHandler(productController.handlePublishProductByShop)
+);
+router.put(
+    "/unpublished/:id",
+    asyncHandler(productController.handleUnPublishProductByShop)
 );
 
 // ======= QUERY ========
