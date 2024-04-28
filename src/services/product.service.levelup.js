@@ -17,6 +17,7 @@ const {
     findProduct,
     updateProductById,
 } = require("../models/repositories/product.repo");
+const { removeUndefinedObject, updateNestedObject } = require("../utils");
 
 // Define Factory class to create product
 
@@ -171,19 +172,19 @@ class Clothing extends Product {
     // ======== UPDATE PRODUCT CLOTHING =============
     async updateProduct(productId) {
         // 1. Remove attributes has null or undefined
-        const objectParams = this;
+        const objectParams = removeUndefinedObject(this);
         if (objectParams.product_attributes) {
             // update child
             await updateProductById({
                 productId,
-                bodyUpdate: objectParams.product_attributes,
+                bodyUpdate: updateNestedObject(objectParams.product_attributes),
                 model: clothing,
             });
         }
 
         const updateProduct = await super.updateProduct(
             productId,
-            objectParams
+            updateNestedObject(objectParams)
         );
         return updateProduct;
     }
@@ -208,19 +209,19 @@ class Electronic extends Product {
     // ======== UPDATE PRODUCT ELECTRONIC =============
     async updateProduct(productId) {
         // 1. Remove attributes has null or undefined
-        const objectParams = this;
+        const objectParams = removeUndefinedObject(this);
         if (objectParams.product_attributes) {
             // update child
             await updateProductById({
                 productId,
-                bodyUpdate: objectParams.product_attributes,
+                bodyUpdate: updateNestedObject(objectParams.product_attributes),
                 model: electronic,
             });
         }
 
         const updateProduct = await super.updateProduct(
             productId,
-            objectParams
+            updateNestedObject(objectParams)
         );
         return updateProduct;
     }
@@ -245,19 +246,19 @@ class Furniture extends Product {
     // ======== UPDATE PRODUCT FURNITURE =============
     async updateProduct(productId) {
         // 1. Remove attributes has null or undefined
-        const objectParams = this;
+        const objectParams = removeUndefinedObject(this);
         if (objectParams.product_attributes) {
             // update child
             await updateProductById({
                 productId,
-                bodyUpdate: objectParams.product_attributes,
+                bodyUpdate: updateNestedObject(objectParams.product_attributes),
                 model: furniture,
             });
         }
 
         const updateProduct = await super.updateProduct(
             productId,
-            objectParams
+            updateNestedObject(objectParams)
         );
         return updateProduct;
     }
