@@ -92,6 +92,27 @@ class ProductController {
     };
 
     /**
+     * @desc Update product for shop
+     * @param {string} product_id
+     * @return {JSON}
+     */
+    updateProduct = async (req, res, next) => {
+        new SuccessResponse({
+            message: "Get product success!",
+            metadata: await ProductServiceV2.updateProduct(
+                req.body.product_type,
+                req.params.productId,
+                {
+                    ...req.body,
+                    product_shop: req.user.userId,
+                }
+            ),
+        }).send(res);
+    };
+
+    // =================================================================
+
+    /**
      * @desc Get list search products for user
      * @param {String} keySearch
      * @return {JSON}

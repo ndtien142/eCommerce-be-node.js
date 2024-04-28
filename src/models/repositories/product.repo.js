@@ -45,6 +45,15 @@ const findAllPublishForShop = async ({ query, limit, skip }) => {
     return await queryProduct({ limit, skip, query });
 };
 
+const updateProductById = async ({
+    productId,
+    model,
+    isNew = true,
+    bodyUpdate,
+}) => {
+    return await model.findByIdAndUpdate(productId, bodyUpdate, { new: isNew });
+};
+
 const searchProductByUser = async ({ keySearch }) => {
     const regexSearch = new RegExp(keySearch);
     const results = await product
@@ -117,4 +126,5 @@ module.exports = {
     searchProductByUser,
     findAllProduct,
     findProduct,
+    updateProductById,
 };
