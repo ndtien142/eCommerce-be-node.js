@@ -102,6 +102,33 @@ class ProductController {
             metadata: await ProductServiceV2.searchProductByUser(req.params),
         }).send(res);
     };
+
+    /**
+     * @desc Get list products for user
+     * @param {Number} limit
+     * @param {string} sort
+     * @param {Number} page
+     * @param {Object} filter
+     * @return {JSON}
+     */
+    findAllProducts = async (req, res, next) => {
+        new SuccessResponse({
+            message: "Get list all products success!",
+            metadata: await ProductServiceV2.findAllProducts(req.query),
+        }).send(res);
+    };
+
+    /**
+     * @desc Get list products for user
+     * @param {string} product_id
+     * @return {JSON}
+     */
+    findProduct = async (req, res, next) => {
+        new SuccessResponse({
+            message: "Get product success!",
+            metadata: await ProductServiceV2.findProduct(req.params),
+        }).send(res);
+    };
 }
 
 module.exports = new ProductController();

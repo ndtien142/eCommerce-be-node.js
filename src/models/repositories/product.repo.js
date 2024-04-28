@@ -7,6 +7,7 @@ const {
     clothing,
     furniture,
 } = require("../product.model");
+const { getSelectData, getUnSelectData } = require("../../utils");
 
 /**
  *
@@ -17,6 +18,27 @@ const {
 
 const findAllDraftForShop = async ({ query, limit, skip }) => {
     return await queryProduct({ limit, skip, query });
+};
+
+const findAllProduct = async ({ limit, page, sort, filter, select }) => {
+    const skip = (page - 1) * limit;
+    const sortBy = sort === "ctime" ? { _id: -1 } : { _id: 1 };
+    const products = await product
+        .find(filter)
+        .sort(sortBy)
+        .skip(skip)
+        .limit(limit)
+        .select(getSelectData(select))
+        .lean();
+    return products;
+};
+
+// unSelect will remove filed not needed select
+const findProduct = async ({ product_id, unSelect }) => {
+    return await product
+        .findById(product_id)
+        .select(getUnSelectData(unSelect))
+        .lean();
 };
 
 const findAllPublishForShop = async ({ query, limit, skip }) => {
@@ -93,4 +115,6 @@ module.exports = {
     publishProductByShop,
     unPublishProductByShop,
     searchProductByUser,
+    findAllProduct,
+    findProduct,
 };
