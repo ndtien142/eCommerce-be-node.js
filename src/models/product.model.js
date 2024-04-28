@@ -36,7 +36,7 @@ const productSchema = new Schema(
         product_variation: { type: Array, default: [] },
         // select = true so that use find one or find will not select this field
         isDraft: { type: Boolean, default: true, index: true, select: false },
-        isPublish: {
+        isPublished: {
             type: Boolean,
             default: false,
             index: true,

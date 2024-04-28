@@ -59,7 +59,7 @@ const publishProductByShop = async ({ product_shop, product_id }) => {
         { _id: product_id, product_shop },
         {
             isDraft: false,
-            isPublish: true,
+            isPublished: true,
             updateAt: Date.now(),
         }
     );
@@ -79,7 +79,7 @@ const unPublishProductByShop = async ({ product_shop, product_id }) => {
         { _id: product_id, product_shop },
         {
             isDraft: true,
-            isPublish: false,
+            isPublished: false,
             updateAt: Date.now(),
         }
     );
