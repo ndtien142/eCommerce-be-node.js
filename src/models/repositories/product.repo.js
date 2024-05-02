@@ -20,7 +20,13 @@ const findAllDraftForShop = async ({ query, limit, skip }) => {
     return await queryProduct({ limit, skip, query });
 };
 
-const findAllProduct = async ({ limit, page, sort, filter, select }) => {
+const findAllProduct = async ({
+    limit = 50,
+    page = 1,
+    sort,
+    filter,
+    select,
+}) => {
     const skip = (page - 1) * limit;
     const sortBy = sort === "ctime" ? { _id: -1 } : { _id: 1 };
     const products = await product
