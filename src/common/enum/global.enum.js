@@ -10,7 +10,15 @@ const DiscountType = Object.freeze({
     PERCENTAGE: "PERCENTAGE",
 });
 
+const CartStateEnum = Object.freeze({
+    ACTIVE: "ACTIVE",
+    COMPLETED: "COMPLETED",
+    CANCELED: "CANCELED",
+    PENDING: "PENDING",
+});
+
 module.exports = {
     DiscountTypeAppliesTo,
     DiscountType,
+    CartStateEnum,
 };

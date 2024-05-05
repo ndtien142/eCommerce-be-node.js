@@ -124,6 +124,10 @@ const unPublishProductByShop = async ({ product_shop, product_id }) => {
     return modifiedCount;
 };
 
+const getProductById = async (productId) => {
+    return await product.findOne({ _id: productId });
+};
+
 module.exports = {
     findAllDraftForShop,
     findAllPublishForShop,
@@ -133,4 +137,5 @@ module.exports = {
     findAllProduct,
     findProduct,
     updateProductById,
+    getProductById,
 };

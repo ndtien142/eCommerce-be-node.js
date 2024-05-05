@@ -8,7 +8,7 @@ const COLLECTION_NAME = "Products";
 const productSchema = new Schema(
     {
         _id: {
-            type: String,
+            type: Schema.Types.ObjectId,
             default: () => nanoid(),
         },
         product_name: { type: String, required: true },
