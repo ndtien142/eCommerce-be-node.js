@@ -28,7 +28,7 @@ require("./dbs/init.mongodb");
 // });
 
 // init routers
-app.use("", require("./routes"));
+app.use("", require("./routers"));
 
 // handling error
 app.use((req, res, next) => {
@@ -42,6 +42,7 @@ app.use((error, req, res, next) => {
     return res.status(statusCode).json({
         status: "error",
         code: statusCode,
+        stack: error.stack,
         message: error.message,
     });
 });
